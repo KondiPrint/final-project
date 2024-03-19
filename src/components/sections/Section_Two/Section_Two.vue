@@ -1,114 +1,46 @@
 <template>
-  <div class="gridLayout_5" id="section_one">
-    <div v-for="book in books">
-      <figure>
-        <img :src="book.img" :alt="book.title" />
-        <figcaption>
-          <h3>{{ book.title }}</h3>
-          <p>{{ book.author }} | {{ book.releaseDate }}</p>
-        </figcaption>
-      </figure>
+  <section>
+    <div>
+      <h2>{{ quote }}</h2>
+      <p>{{ author }}</p>
     </div>
-  </div>
+    <button @click="getQuote" class="btn">New quote</button>
+  </section>
 </template>
 
 <script setup>
 import { ref } from 'vue'
 
-const books = ref([
-  {
-    title: 'The Great Gatsby',
-    author: 'F. Scott Fitzgerald',
-    releaseDate: '1925',
-    img: '/images/the_great_gatsby.jpg'
-  },
-  {
-    title: 'To Kill a Mockingbird',
-    author: 'Harper Lee',
-    releaseDate: '1960',
-    img: '/images/to_kill_a_mockingbird.jpg'
-  },
-  {
-    title: '1984',
-    author: 'George Orwell',
-    releaseDate: '1949',
-    img: '/images/1984.jpg'
-  },
-  {
-    title: 'The Catcher in the Rye',
-    author: 'J.D. Salinger',
-    releaseDate: '1951',
-    img: '/images/the_catcher_in_the_rye.jpg'
-  },
-  {
-    title: 'Pride and Prejudice',
-    author: 'Jane Austen',
-    releaseDate: '1813',
-    img: '/images/pride_and_prejudice.jpg'
-  },
-  {
-    title: 'The Hobbit',
-    author: 'J.R.R. Tolkien',
-    releaseDate: '1937',
-    img: '/images/the_hobbit.jpg'
-  },
-  {
-    title: 'The Da Vinci Code',
-    author: 'Dan Brown',
-    releaseDate: '2003',
-    img: '/images/the_da_vinci_code.jpg'
-  },
-  {
-    title: 'The Outsiders',
-    author: 'S.E. Hinton',
-    releaseDate: '1967',
-    img: '/images/the_outsiders.jpg'
-  },
-  {
-    title: 'The Hunger Games',
-    author: 'Suzanne Collins',
-    releaseDate: '2008',
-    img: '/images/the_hunger_games.jpg'
-  },
-  {
-    title: 'The Alchemist',
-    author: 'Paulo Coelho',
-    releaseDate: '1988',
-    img: '/images/the_alchemist.jpg'
+const quote = ref('')
+const author = ref('')
+
+const getQuote = async () => {
+  try {
+    const response = await fetch('https://api.quotable.io/random')
+    const data = await response.json()
+    quote.value = data.content
+    author.value = data.author
+  } catch (error) {
+    console.error('An error occured trying to get a quote', error)
   }
-])
+}
+
+getQuote()
 </script>
 
 <style scoped>
-.gridLayout_5 figcaption {
-  margin-block: 0.8rem;
-  text-align: center;
-}
-.gridLayout_5 figcaption p {
+p {
   font-style: italic;
+  font-size: 1.5rem;
 }
 
-.gridLayout_5 figure {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border: 2px solid #f2f2f2;
+h2 {
+  font-size: 2rem;
+}
+
+div {
+  border: 2px solid whitesmoke;
+  padding: 2rem;
   border-radius: 10px;
-  padding: 0.5rem;
-  scale: 0.99;
-  transition: 0.4s;
-}
-
-.gridLayout_5 figure:hover {
-  scale: 1.1;
-  border: 2px solid green;
-}
-
-.gridLayout_5 figure img {
-  width: 150px;
-  height: 200px;
-  overflow: hidden;
-  z-index: -1;
 }
 </style>

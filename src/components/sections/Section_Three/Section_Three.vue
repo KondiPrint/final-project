@@ -1,13 +1,28 @@
 <template>
-  <div class="gridLayout_5" id="section_one">
-    <div v-for="book in books">
-      <figure>
-        <img :src="book.img" :alt="book.title" />
-        <figcaption>
-          <h3>{{ book.title }}</h3>
-          <p>{{ book.author }} | {{ book.releaseDate }}</p>
-        </figcaption>
-      </figure>
+  <div class="container">
+    <div class="input-group">
+      <label class="input-filled">
+        <input required v-model="newTask" @keyup.enter="addTask" />
+        <span class="input-label">Add new task</span>
+      </label>
+      <table>
+        <thead>
+          <tr>
+            <th>Task</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(task, index) in tasks" :key="index">
+            <td @click="toggleCompletion(index)" :class="{ completed: task.completed }">
+              {{ task.description }}
+            </td>
+            <td>
+              <button class="btn" @click="deleteTask(index)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>
@@ -15,100 +30,106 @@
 <script setup>
 import { ref } from 'vue'
 
-const books = ref([
-  {
-    title: 'The Great Gatsby',
-    author: 'F. Scott Fitzgerald',
-    releaseDate: '1925',
-    img: '/images/the_great_gatsby.jpg'
-  },
-  {
-    title: 'To Kill a Mockingbird',
-    author: 'Harper Lee',
-    releaseDate: '1960',
-    img: '/images/to_kill_a_mockingbird.jpg'
-  },
-  {
-    title: '1984',
-    author: 'George Orwell',
-    releaseDate: '1949',
-    img: '/images/1984.jpg'
-  },
-  {
-    title: 'The Catcher in the Rye',
-    author: 'J.D. Salinger',
-    releaseDate: '1951',
-    img: '/images/the_catcher_in_the_rye.jpg'
-  },
-  {
-    title: 'Pride and Prejudice',
-    author: 'Jane Austen',
-    releaseDate: '1813',
-    img: '/images/pride_and_prejudice.jpg'
-  },
-  {
-    title: 'The Hobbit',
-    author: 'J.R.R. Tolkien',
-    releaseDate: '1937',
-    img: '/images/the_hobbit.jpg'
-  },
-  {
-    title: 'The Da Vinci Code',
-    author: 'Dan Brown',
-    releaseDate: '2003',
-    img: '/images/the_da_vinci_code.jpg'
-  },
-  {
-    title: 'The Outsiders',
-    author: 'S.E. Hinton',
-    releaseDate: '1967',
-    img: '/images/the_outsiders.jpg'
-  },
-  {
-    title: 'The Hunger Games',
-    author: 'Suzanne Collins',
-    releaseDate: '2008',
-    img: '/images/the_hunger_games.jpg'
-  },
-  {
-    title: 'The Alchemist',
-    author: 'Paulo Coelho',
-    releaseDate: '1988',
-    img: '/images/the_alchemist.jpg'
-  }
+const tasks = ref([
+  { description: 'Learn Vue.js', completed: false },
+  { description: 'Build a todo list', completed: false },
+  { description: 'Practice coding', completed: true }
 ])
+
+const newTask = ref('')
+
+const addTask = () => {
+  if (newTask.value.trim() !== '') {
+    tasks.value.push({ description: newTask.value, completed: false })
+    newTask.value = ''
+  }
+}
+
+const toggleCompletion = (index) => {
+  tasks.value[index].completed = !tasks.value[index].completed
+}
+
+const deleteTask = (index) => {
+  tasks.value.splice(index, 1)
+}
 </script>
 
 <style scoped>
-.gridLayout_5 figcaption {
-  margin-block: 0.8rem;
-  text-align: center;
-}
-.gridLayout_5 figcaption p {
-  font-style: italic;
-}
-
-.gridLayout_5 figure {
+.container {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  border: 2px solid #f2f2f2;
-  border-radius: 10px;
-  padding: 0.5rem;
-  scale: 0.99;
-  transition: 0.4s;
+  width: 100%;
+  margin: 0 auto;
 }
 
-.gridLayout_5 figure:hover {
-  scale: 1.1;
-  border: 2px solid green;
+table {
+  width: auto;
+  border-collapse: collapse;
+  margin: 0 auto;
 }
 
-.gridLayout_5 figure img {
-  width: 150px;
-  height: 200px;
-  overflow: hidden;
-  z-index: -1;
+th,
+td {
+  padding: 8px;
+  border-bottom: 1px solid aquamarine;
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+.completed {
+  text-decoration: line-through;
+  font-style: italic;
+}
+
+.input-group {
+  margin-bottom: 1.5rem;
+  position: relative;
+  width: auto;
+  margin: 0 auto;
+}
+
+input {
+  border: none;
+  border-radius: 6px 6px 0 0;
+  border-bottom: 0.3rem solid aquamarine;
+  width: 100%;
+  height: 3rem;
+  font-size: 1.5rem;
+  padding-left: 0.5rem;
+  padding-top: 1rem;
+  padding-bottom: 0.5rem;
+  color: #fff;
+  background: #222222;
+}
+
+.input-filled > .input-label {
+  position: absolute;
+  top: 10px;
+  left: 7px;
+  transition: top 0.3s;
+  font-size: 1rem;
+}
+
+.input-filled > input:hover {
+  background: rgb(65, 65, 65);
+  border-color: aquamarine;
+}
+
+input:focus + .input-label,
+input:valid + .input-label {
+  top: -30px;
+  font-size: 1rem;
+  margin-bottom: 32px;
+}
+
+input:focus + .input-label {
+  color: aquamarine;
+}
+
+input:focus {
+  border-color: aquamarine;
+  outline: none;
+  background: rgb(65, 65, 65);
 }
 </style>

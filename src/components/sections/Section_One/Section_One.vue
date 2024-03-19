@@ -1,6 +1,6 @@
 <template>
   <div class="gridLayout_5">
-    <div v-for="book in books">
+    <div v-for="book in books" :key="book.title">
       <figure>
         <img :src="book.img" :alt="book.title" />
         <figcaption>
@@ -84,6 +84,7 @@ const books = ref([
   margin-block: 0.8rem;
   text-align: center;
 }
+
 .gridLayout_5 figcaption p {
   font-style: italic;
 }
@@ -96,12 +97,14 @@ const books = ref([
   border: 2px solid #f2f2f2;
   border-radius: 10px;
   padding: 0.5rem;
-  scale: 0.99;
-  transition: 0.4s;
+  transform: scale(0.99);
+  transition:
+    transform 0.4s,
+    border 0.4s;
 }
 
 .gridLayout_5 figure:hover {
-  scale: 1.1;
+  transform: scale(1.1);
   border: 2px solid green;
 }
 
@@ -109,6 +112,5 @@ const books = ref([
   width: 150px;
   height: 200px;
   overflow: hidden;
-  z-index: -1;
 }
 </style>
