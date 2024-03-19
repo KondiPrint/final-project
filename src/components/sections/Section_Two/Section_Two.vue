@@ -1,3 +1,6 @@
+<!-- I den her component har jeg brugt 'ref' til at binde quote og author til content og author i det API jeg kalder ind.
+Det vil sige at quote/author automatisk opdatere UI'et når der kommer ny data -->
+
 <template>
   <section>
     <div>

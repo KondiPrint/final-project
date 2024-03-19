@@ -1,3 +1,7 @@
+<!-- Her er en anden måde jeg har brugt 'ref' på, samt en ny funktion, v-model. -->
+<!-- v-model binder form inputs til data. -->
+<!-- newTask som er en 'ref' holder på den data jeg skriver ind i input og pusher den så ind i den anden 'ref' (task), hvilket så opdaterer array'et med den nye data. -->
+
 <template>
   <div class="container">
     <div class="input-group">

@@ -1,3 +1,6 @@
+<!-- I det her component har jeg brugt v-for, hvilket egentlig bare er en forEach eller map, jeg har også brugt v-bind (:) som lader mig "binde" HTML atributter (eller classes) til variabler,
+ f.eks. book.title i mit array. -->
+
 <template>
   <div class="gridLayout_5">
     <div v-for="book in books" :key="book.title">

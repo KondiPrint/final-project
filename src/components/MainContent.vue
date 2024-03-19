@@ -1,3 +1,10 @@
+<!-- Jeg har brugt "v-show" og "v-on" (@click) i den her component, samt "ref". Udover det har jeg brugt 'scoped' på mit CSS, hvilket betyder at al CSS som bliver skrevet ind her, 
+bliver i det her component.  -->
+
+<!-- v-show lader mig toggle synligheden for det element som jeg har sat den på -->
+<!-- v-on lader mig tilføje en event (f.eks. click, mouseover osv.). F.eks. ved et tryk på en knap. -->
+<!-- ref er en måde man kan dynamisk opdatere data -->
+
 <template>
   <div class="wrapper">
     <div class="main__title">
